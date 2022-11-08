@@ -240,7 +240,7 @@ class WPFB_Output
 
     public static function fileBrowserCatItemText($catsel, $filesel, $c, $onselect, $tpl = 'filebrowser')
     {
-        return $catsel ? ('<a href="javascript:;" onclick="' . sprintf($onselect, $c->cat_id) . '">' . esc_html($c->GetTitle(24)) . '</a>' . " ($c->cat_num_files / $c->cat_num_files_total)") : ($filesel ? (esc_html($c->cat_name) . " ($c->cat_num_files / $c->cat_num_files_total)") : $c->GenTpl2($tpl, false));
+	return $catsel ? ('<a href="javascript:;" onclick="' . sprintf($onselect, $c->cat_id) . '">' . esc_html($c->GetTitle(24)) . '</a>' . " ($c->cat_num_files / $c->cat_num_files_total)") : ($filesel ? (esc_html($c->cat_name) . " ($c->cat_num_files / $c->cat_num_files_total)") : $c->get_tpl_var('cat_small_icon').' '.$c->get_tpl_var('cat_name'));
     }
 
     public static function fileBrowserArgs($args)
@@ -284,10 +284,10 @@ class WPFB_Output
         }
 
 
-        $sql_sort_files =                 ($browser ? WPFB_Core::GetSortSql((WPFB_Core::$settings->file_browser_file_sort_dir ? '>' : '<') . WPFB_Core::$settings->file_browser_file_sort_by) : 'file_display_name'
+        $sql_sort_files = ($browser ? WPFB_Core::GetSortSql((WPFB_Core::$settings->file_browser_file_sort_dir ? '>' : '<') . WPFB_Core::$settings->file_browser_file_sort_by) : 'file_display_name'
                 );
 
-        $sql_sort_cats =                 ($browser ? WPFB_Core::GetSortSql((WPFB_Core::$settings->file_browser_cat_sort_dir ? '>' : '<') . WPFB_Core::$settings->file_browser_cat_sort_by, false, true) : 'cat_name'
+        $sql_sort_cats =  ($browser ? WPFB_Core::GetSortSql((WPFB_Core::$settings->file_browser_cat_sort_dir ? '>' : '<') . WPFB_Core::$settings->file_browser_cat_sort_by, false, true) : 'cat_name'
                 );
 
 
@@ -308,6 +308,9 @@ class WPFB_Output
         $folder_class = ($filesel || $catsel) ? 'cat folder' : 'cat';
         foreach ($cats as $c) {
             if ($c->CurUserCanAccess(true))
+                if (empty( $args ) ) {
+                    $args = ["onselect" => ""];
+                }
                 $cat_items[$i++] = (object)array(
                     'id' => $idp_cat . $c->cat_id, 'cat_id' => $c->cat_id,
                     'text' => self::fileBrowserCatItemText($catsel, $filesel, $c, $args['onselect'], $cat_tpl),
@@ -361,7 +364,7 @@ class WPFB_Output
             foreach ($files as $f)
                 $file_items[$i++] = (object)array(
                     'id' => $idp_file . $f->file_id, 'file_id' => $f->file_id,
-                    'text' => $filesel ? ('<a href="javascript:;" onclick="' . sprintf($args['onselect'], $f->file_id, esc_js($f->file_path), esc_js($f->file_display_name)) . '">' . $f->get_tpl_var('file_small_icon') . ' ' . esc_html($f->GetTitle(24)) . '</a> <span style="font-size:75%;vertical-align:top;">' . esc_html($f->file_name) . '</span>') : $f->GenTpl2($file_tpl, false),
+                    'text' => $filesel ? ('<a href="javascript:;" onclick="' . sprintf($args['onselect'], $f->file_id, esc_js($f->file_path), esc_js($f->file_display_name)) . '">' . $f->get_tpl_var('file_small_icon') . ' ' . esc_html($f->GetTitle(24)) . '</a> <span style="font-size:75%;vertical-align:top;">' . esc_html($f->file_name) . '</span>') : $f->get_tpl_var('file_small_icon').' <a href="' . $f->file_path . '">'.$f->get_tpl_var('file_display_name').'</a> ('.$f->get_tpl_var('file_size').')',
                     'classes' => $filesel ? 'file' : null,
                     'type' => 'file',
                     'hasChildren' => false
@@ -545,11 +548,11 @@ class WPFB_Output
         if (is_object($base))
             $base = $base->GetId();
 
-        $ajax_data =                 array(
+        $ajax_data = array(
                     'wpfb_action' => 'tree',
                     'type' => 'browser',
                     'base' => intval($base)
-                )         ;
+                );
         if (is_admin())
             $ajax_data['is_admin'] = true;
 
@@ -607,7 +610,7 @@ class WPFB_Output
             add_filter('the_content', array(__CLASS__, 'GeneratePageContentFilter'), 10);
         } else {
             add_filter('the_posts', array(__CLASS__, 'GeneratePagePostFilter'), 9, 2);
-            add_filter('edit_post_link', create_function('', 'return "";')); // hide edit link
+            add_filter('edit_post_link', function() { return ""; }); // hide edit link
         }
     }
 

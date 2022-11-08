@@ -381,7 +381,7 @@ class WPFB_Item
         }
         if ($rel) {
             $url = substr($url, strlen(home_url()));
-            if ($url{0} == '?')
+            if ($url[0] == '?')
                 $url = 'index.php' . $url;
             else
                 $url = substr($url, 0); // remove trailing slash! TODO?!
@@ -434,7 +434,7 @@ class WPFB_Item
             $tpl_funcs[$type][$tpl_tag] = WPFB_Core::CreateTplFunc($parsed_tpl);
         }
 
-        self::$tpl_uid = (defined('DOING_AJAX') && DOING_AJAX) ? ($this->GetId() . '' . (round(microtime() * 1000) % 1000)) : (self::$tpl_uid + 1);
+        self::$tpl_uid = (defined('DOING_AJAX') && DOING_AJAX) ? ($this->GetId() . ( round(microtime() * 1000) % 1000)) : ( (int) self::$tpl_uid + 1);
 
         if ($extra_data && !is_object($extra_data))
             $extra_data = (object)$extra_data;

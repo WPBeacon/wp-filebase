@@ -61,7 +61,7 @@ class WPFB_Ajax {
             'tree' => 'actionTree',
             'list' => 'actionList',
             'upload' => 'upload',
-				'parse-filename' => 'parseFilename'
+	    'parse-filename' => 'parseFilename'
         );
 
         $public_actions = apply_filters('wpfilebase_ajax_public_actions', $public_actions);
@@ -78,7 +78,7 @@ class WPFB_Ajax {
 
         $args = wp_parse_args($args, array(
             'sort' => array(),
-                        'onselect' => null,
+            'onselect' => null,
             'idp' => null,
             'tpl' => null,
             'inline_add' => true,
