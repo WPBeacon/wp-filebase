@@ -169,7 +169,7 @@ class WPFB_Item
         }
         $on = preg_replace('/[^0-9a-z_]/i', '', $on); //strip hacking
         $comparer = $desc ? "return -strcmp(\$a->{$on},\$b->{$on});" : "return strcmp(\$a->{$on},\$b->{$on});";
-        usort($items, create_function('$a,$b', $comparer));
+        usort($items, function($a,$b) { return $comparer; });
     }
 
     function GetEditUrl()
@@ -549,7 +549,7 @@ class WPFB_Item
     {
         static $parent_walker = false;
         if (!$parent_walker)
-            $parent_walker = create_function('&$f,$fid,$pid', 'if($f->file_category != $pid) $f = null;');
+            $parent_walker = function( &$f,$fid,$pid ) { if($f->file_category != $pid) $f = null; };
 
         if ($this->is_file)
             return array($this->GetId() => $this);

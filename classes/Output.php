@@ -731,7 +731,7 @@ class WPFB_Output
         if (!empty($secret_key))
             $nonce_action .= $secret_key;
 
-        $hidden_vars = array_filter($hidden_vars, create_function('$v', 'return !(is_object($v) || is_array($v));'));
+        $hidden_vars = array_filter($hidden_vars, function($v) { return !(is_object($v) || is_array($v)); });
 
         foreach ($hidden_vars as $n => $v) {
             echo '<input type="hidden" name="' . esc_attr($n) . '" value="' . esc_attr($v) . '" id="' . $prefix . esc_attr($n) . '" />';

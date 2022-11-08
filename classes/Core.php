@@ -523,7 +523,7 @@ class WPFB_Core
 
     static function CreateTplFunc($parsed_tpl)
     {
-        return create_function('$f,$e=null', "return ($parsed_tpl);");
+        return function($f,$e=null) use ($parsed_tpl) { return $parsed_tpl; };
     }
 
     /**
