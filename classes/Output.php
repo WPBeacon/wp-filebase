@@ -364,7 +364,7 @@ class WPFB_Output
             foreach ($files as $f)
                 $file_items[$i++] = (object)array(
                     'id' => $idp_file . $f->file_id, 'file_id' => $f->file_id,
-                    'text' => $filesel ? ('<a href="javascript:;" onclick="' . sprintf($args['onselect'], $f->file_id, esc_js($f->file_path), esc_js($f->file_display_name)) . '">' . $f->get_tpl_var('file_small_icon') . ' ' . esc_html($f->GetTitle(24)) . '</a> <span style="font-size:75%;vertical-align:top;">' . esc_html($f->file_name) . '</span>') : $f->get_tpl_var('file_small_icon').' <a href="' . $f->file_path . '">'.$f->get_tpl_var('file_display_name').'</a> ('.$f->get_tpl_var('file_size').')',
+                    'text' => $filesel ? ('<a href="javascript:;" onclick="' . sprintf($args['onselect'], $f->file_id, esc_js($f->file_path), esc_js($f->file_display_name)) . '">' . $f->get_tpl_var('file_small_icon') . ' ' . esc_html($f->GetTitle(24)) . '</a> <span style="font-size:75%;vertical-align:top;">' . esc_html($f->file_name) . '</span>') : $f->get_tpl_var('file_small_icon').' <a href="' . $f->get_tpl_var('file_url') . '">'.$f->get_tpl_var('file_display_name').'</a> ('.$f->get_tpl_var('file_size').')',
                     'classes' => $filesel ? 'file' : null,
                     'type' => 'file',
                     'hasChildren' => false
