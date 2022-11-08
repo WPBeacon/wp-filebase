@@ -129,6 +129,9 @@ Goto WP-Filebase Settings and disable Permalinks under "Download". Try to disabl
 
 == Changelog ==
 
+= 0.3.5 =
+* Forked plugin for PHP 7/8 compatibility
+
 = 0.3.4.24 =
 * New dashboard
 * Fixed XSS vulnerability
