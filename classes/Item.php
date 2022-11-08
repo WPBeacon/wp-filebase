@@ -157,7 +157,7 @@ class WPFB_Item
     static function Sort(&$items, $order_sql)
     {
         $order_sql = strtr($order_sql, array('&gt;' => '>', '&lt;' => '<'));
-        if (($desc = ($order_sql{0} == '>')) || $order_sql{0} == '<')
+        if (($desc = ($order_sql[0] == '>')) || $order_sql[0] == '<')
             $on = substr($order_sql, 1);
         else {
             $p = strpos($order_sql, ','); // strip multi order clauses

@@ -76,7 +76,7 @@ class WPFB_Output
                 if ($id > 0 && ($file = wpfb_call('File', 'GetFile', $id)) != null) {
                     if (empty($args['linktext']))
                         return $file->GetUrl();
-                    if (($new_tab = ($args['linktext']{0} == '*')))
+                    if (($new_tab = ($args['linktext'][0] == '*')))
                         $args['linktext'] = substr($args['linktext'], 1);
                     return '<a href="' . $file->GetUrl() . '" ' . ($new_tab ? 'target="_blank"' : '') . '>' . $args['linktext'] . '</a>';
                 } else
@@ -113,10 +113,10 @@ class WPFB_Output
             $sort = substr($sort, 0, $p);
 
         $desc = $for_cat ? WPFB_Core::$settings->filelist_sorting_dir : false;
-        if ($sort && $sort{0} == '<') {
+        if ($sort && $sort[0] == '<') {
             $desc = false;
             $sort = substr($sort, 1);
-        } elseif ($sort && $sort{0} == '>') {
+        } elseif ($sort && $sort[0] == '>') {
             $desc = true;
             $sort = substr($sort, 1);
         }
