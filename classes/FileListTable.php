@@ -195,7 +195,7 @@ class WPFB_FileListTable extends WP_List_Table {
 
 		// filter files current user can edit
 		/* @var $files WPFB_File[] */ 
-		$files = isset($_REQUEST['file']) ? array_filter(array_map(array('WPFB_File', 'GetFile'), $_REQUEST['file']), function($file) { return ($file && $file->CurUserCan' . 'Edit' . '()); }) : array();
+		$files = isset($_REQUEST['file']) ? array_filter(array_map(array('WPFB_File', 'GetFile'), $_REQUEST['file']), function($file) { return '($file && $file->CurUserCan' . 'Edit' . '())'; }) : array();
 
 		$message = null;
 		switch ($this->current_action()) {
