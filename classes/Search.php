@@ -97,7 +97,7 @@ class WPFB_Search
 
         // TODO: search fields with match...
         foreach ($search_terms as $term) {
-            $where .= ($not = ($term{0} === '-')) ? " AND NOT (" : " AND (";
+            $where .= ($not = ($term[0] === '-')) ? " AND NOT (" : " AND (";
             if ($not) $term = substr($term, 1);
 
             $wc = strpos($term, '*') !== false; // check for wildcard
